@@ -31,3 +31,29 @@ To enable debug SSL run with `-Djavax.net.debug=ssl`. Don't forget to apply chan
 
 ## Note
 All passwords, filenames, certificate identifiers come from the example linked at the very beginning.
+
+
+### Using cqlsh
+If you allow client encryption, cqlsh won't work anymore as is. You need to follow these steps.
+
+1. run `keytool -importkeystore -srckeystore node1-server-keystore.jks  -destkeystore node1.p12 -deststoretype PKCS12`
+2. run `openssl pkcs12 -in node1.p12 -out node1.pem -nodes`
+  * move `node1.pem` to `.cassandra`
+3. edit the file `.cassandra/cqlshrc`, insert these lines
+```bash
+[authentication]
+username =
+password =
+
+[connection]
+hostname = localhost
+port = 9042
+factory = cqlshlib.ssl.ssl_transport_factory
+
+[ssl]
+certfile = /Users/Giampaolo/.cassandra/node1.pem
+validate = true ## Optional, true by default.
+```
+4. connect with `ccm node1 cqlsh --ssl`
+
+
