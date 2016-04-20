@@ -31,15 +31,10 @@ public class ClientToNode {
 
     logger.info("Login into {}", host);
 
-    cluster = getCluster("/client-truststore.jks", "truststorepass");
+    cluster = getCluster("/client-truststore.jks", "truststorepass", host);
 
     // Alternate way to use a truststore passing location and password from command line
-    //
-    // -Djavax.net.ssl.trustStore=/Users/Giampaolo/dev/cassandra-ssl-client-to-node-example/target/classes/client-truststore.jks -Djavax.net.ssl.trustStorePassword=truststorepass</extraJvmArguments
-    //cluster = Cluster.builder()
-    //  .addContactPoint(host)
-    //  .withSSL()
-    //  .build();
+    // cluste = getCluster();
 
 
     // Connect to the cluster and keyspace "ssl"
@@ -69,7 +64,7 @@ public class ClientToNode {
 
 
   // This method is an example of loading a truststore from a resource, decoding it with its password.
-  private Cluster getCluster(String trustStoreLocation, String trustStorePassword) {
+  private Cluster getCluster(String trustStoreLocation, String trustStorePassword, String host) {
     Cluster cluster;
     SSLContext sslcontext = null;
 
@@ -104,9 +99,19 @@ public class ClientToNode {
       .build();
 
     cluster = Cluster.builder()
-      .addContactPoint("127.0.0.1")
+      .addContactPoint(host)
       .withSSL(sslOptions)
       .build();
+    return cluster;
+  }
+
+  private Cluster getCluster(String host) {
+    // -Djavax.net.ssl.trustStore=/Users/Giampaolo/dev/cassandra-ssl-client-to-node-example/target/classes/client-truststore.jks -Djavax.net.ssl.trustStorePassword=truststorepass
+    Cluster cluster = Cluster.builder()
+      .addContactPoint(host)
+      .withSSL()
+      .build();
+
     return cluster;
   }
 }
