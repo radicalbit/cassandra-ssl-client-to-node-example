@@ -34,7 +34,7 @@ public class ClientToNode {
     cluster = getCluster("/client-truststore.jks", "truststorepass", host);
 
     // Alternate way to use a truststore passing location and password from command line
-    // cluste = getCluster();
+    // cluster = getCluster(host);
 
 
     // Connect to the cluster and keyspace "ssl"
