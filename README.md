@@ -107,8 +107,8 @@ In this case, you neeed to build the cluster only with the SSL option enabled:
 ### To invoke from command line type
 If you want to invoke `ClientToNode` class without the help of an IDE, you can run the following commands in the root folder of the project:
 
-1. `mvn package appassembler:assemble`
-2. `sh target/appassembler/bin/clientToNode 127.0.0.1`
+1. `mvn package appassembler:assemble`,
+2. `sh target/appassembler/bin/clientToNode 127.0.0.1`,
 
 SSL parameters are specified in `pom.xml` at `extraJvmArguments` tag.
 
@@ -120,15 +120,16 @@ To enable debug SSL run with `-Djavax.net.debug=ssl`. Don't forget to apply chan
 If you allow client encryption, `cqlsh` won't work anymore as is. You need to follow these steps to connect to cluster.
 
 1. Run
-   ```keytool -importkeystore \
-              -srckeystore node1-server-keystore.jks  \
-              -destkeystore node1.p12 \
-              -deststoretype PKCS12 \
-              -alias node1 \
-              -srcstorepass awesomepass \
-              -srckeypass awesomepass \
-              -deststorepass clientpassword \
-              -destkeypass clientpassword`
+   ```bash
+   keytool -importkeystore \
+           -srckeystore node1-server-keystore.jks  \
+           -destkeystore node1.p12 \
+           -deststoretype PKCS12 \
+           -alias node1 \
+           -srcstorepass awesomepass \
+           -srckeypass awesomepass \
+           -deststorepass clientpassword \
+           -destkeypass clientpassword
    ```
 
    to convert the server certificate to the [PKCS12](https://en.wikipedia.org/wiki/PKCS_12) format.
@@ -136,7 +137,6 @@ If you allow client encryption, `cqlsh` won't work anymore as is. You need to fo
 3. Move the file `node1.pem` to the folder `~/.cassandra`. This folder holds the command history for `cqlsh`, `cli` and `nodetool` session. It contains also the `.cqlshrs` file that specifies different settings for the cqlsh sessions.
    The `.cassandra` directory holds command history for your `cqlsh`, `cli`, and `nodetool` sessions. It is also the default location for the `.cqlshrc` file, which allows you to persist various [settings](http://docs.datastax.com/en/cql/3.1/cql/cql_reference/cqlshrc.html) for your `cqlsh` sessions.
 4. Edit or create the `~/.cassandra/cqlshrc` file adding the following sections if not present:
-
    ```bash
    [authentication]
    username =
