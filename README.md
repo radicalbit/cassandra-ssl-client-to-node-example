@@ -12,7 +12,7 @@ In particular I will use the [Cassandra Cluster Manager (CCM)](https://github.co
 2. Generate a trust store named `client-truststore.jks` including the CA root certificate running `keytool -keystore client-truststore.jks -alias CARoot -importcert -file ca-cert -keypass mypass -storepass truststorepass -noprompt`
 3. Put `client-truststore.jks` under `resources` folder of this project.
    This way client is shares your Certification Authority with any node in the cluster. This will allow encrypted communication after the handshake.
-4. Change the [client_encryption_options|https://github.com/apache/cassandra/blob/trunk/conf/cassandra.yaml#L897-L911] section of `cassandra-yaml` for every node of the cluster as follows to enable client encryption (but not authentication):
+4. Change the [client_encryption_options](https://github.com/apache/cassandra/blob/trunk/conf/cassandra.yaml#L897-L911) section of `cassandra-yaml` for every node of the cluster as follows to enable client encryption (but not authentication):
 
    ```yaml
    client_encryption_options:
@@ -116,10 +116,10 @@ If you allow client encryption, `cqlsh` won't work anymore as is. You need to fo
               -destkeypass clientpassword`
    ```
 
-   to convert the server certificate to the [PKCS12|(https://en.wikipedia.org/wiki/PKCS_12)] format.
-2. Convert the `PKCS#12` to the [PEM|(https://en.wikipedia.org/wiki/Privacy-enhanced_Electronic_Mail)] format with this command `openssl pkcs12 -in node1.p12 -out node1.pem -nodes`. The option `-nodes` is not the word "nodes" so it's unrelated to Cassandra nodes, but rather is "no DES" which means that OpenSSL will not encrypt the private key in a `PKCS#12` file.
+   to convert the server certificate to the [PKCS12](https://en.wikipedia.org/wiki/PKCS_12) format.
+2. Convert the `PKCS#12` to the [PEM](https://en.wikipedia.org/wiki/Privacy-enhanced_Electronic_Mail) format with this command `openssl pkcs12 -in node1.p12 -out node1.pem -nodes`. The option `-nodes` is not the word "nodes" so it's unrelated to Cassandra nodes, but rather is "no DES" which means that OpenSSL will not encrypt the private key in a `PKCS#12` file.
 3. Move the file `node1.pem` to the folder `~/.cassandra`. This folder holds the command history for `cqlsh`, `cli` and `nodetool` session. It contains also the `.cqlshrs` file that specifies different settings for the cqlsh sessions.
-   The `.cassandra` directory holds command history for your `cqlsh`, `cli`, and `nodetool` sessions. It is also the default location for the `.cqlshrc` file, which allows you to persist various [settings|(http://docs.datastax.com/en/cql/3.1/cql/cql_reference/cqlshrc.html)] for your `cqlsh` sessions.
+   The `.cassandra` directory holds command history for your `cqlsh`, `cli`, and `nodetool` sessions. It is also the default location for the `.cqlshrc` file, which allows you to persist various [settings](http://docs.datastax.com/en/cql/3.1/cql/cql_reference/cqlshrc.html) for your `cqlsh` sessions.
 4  Edit or create the `~/.cassandra/cqlshrc` file adding the following sections if not present:
 
    ```bash
@@ -164,8 +164,8 @@ In alternative, you can specify certificate for every node in the `[certfiles]` 
 
 
 ## References
-[What is a Pem file and how does it differ from other OpenSSL Generated Key File Formats|(http://serverfault.com/a/9717/329639)]
-[Creating and using the cqlshrc file|(http://docs.datastax.com/en/cql/3.1/cql/cql_reference/cqlshrc.html)]
-[Using cqlsh with SSL encryption|(http://docs.datastax.com/en/cassandra/2.1/cassandra/security/secureCqlshSSL_t.html)]
-[“~/.cassandra” folder - what is it used for?|http://stackoverflow.com/q/30869921/1360888)]
+[What is a Pem file and how does it differ from other OpenSSL Generated Key File Formats](http://serverfault.com/a/9717/329639)
+[Creating and using the cqlshrc file](http://docs.datastax.com/en/cql/3.1/cql/cql_reference/cqlshrc.html)
+[Using cqlsh with SSL encryption](http://docs.datastax.com/en/cassandra/2.1/cassandra/security/secureCqlshSSL_t.html)
+[“~/.cassandra” folder - what is it used for?](http://stackoverflow.com/q/30869921/1360888)
 
