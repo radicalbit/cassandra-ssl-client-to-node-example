@@ -2,7 +2,7 @@
 
 This example shows how to connect to a Cassandra cluster using SSL encryption (client to node encryption). This is ideally
 a continuation of the [post from The Last Picke blog](http://thelastpickle.com/blog/2015/09/30/hardening-cassandra-step-by-step-part-1-server-to-server.html)
-that explains how to implement node-to-node encryption in a Cassandra cluster.
+that explains how to implement node-to-node encryption in a Cassandra cluster. There instructions do not cover the client _authentication_ that requires a slight different configuration.
 I'll will use the same passwords, filenames, identifiers and conventions of that post in the following.
 In particular I will use the [Cassandra Cluster Manager (CCM)](https://github.com/pcmanus/ccm.git) to provide with a working cluster.
 
@@ -160,4 +160,12 @@ In alternative, you can specify certificate for every node in the `[certfiles]` 
    127.0.0.3 = /Users/Giampaolo/.cassandra/node1.pem
    ```
 
+
+
+
+## References
+[What is a Pem file and how does it differ from other OpenSSL Generated Key File Formats|(http://serverfault.com/a/9717/329639)]
+[Creating and using the cqlshrc file|(http://docs.datastax.com/en/cql/3.1/cql/cql_reference/cqlshrc.html)]
+[Using cqlsh with SSL encryption|(http://docs.datastax.com/en/cassandra/2.1/cassandra/security/secureCqlshSSL_t.html)]
+[“~/.cassandra” folder - what is it used for?|http://stackoverflow.com/q/30869921/1360888)]
 
