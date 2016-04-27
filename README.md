@@ -1,14 +1,14 @@
 # cassandra-ssl-client-to-node-example
 
 This example shows how to connect to a Cassandra cluster using SSL encryption (client to node encryption). This is ideally
-a continuation of the [post from The Last Picke blog](http://thelastpickle.com/blog/2015/09/30/hardening-cassandra-step-by-step-part-1-server-to-server.html)
+a continuation of the [post from The Last Pickle blog](http://thelastpickle.com/blog/2015/09/30/hardening-cassandra-step-by-step-part-1-server-to-server.html)
 that explains how to implement node-to-node encryption in a Cassandra cluster. There instructions do not cover the client _authentication_ that requires a slight different configuration.
-I'll will use the same passwords, filenames, identifiers and conventions of that post in the following.
+I'll will use the same passwords, file names, identifiers and conventions of that post in the following.
 In particular I will use the [Cassandra Cluster Manager (CCM)](https://github.com/pcmanus/ccm.git) to provide with a working cluster.
 
 ## To make it work:
 
-1. Follow the cited blog post to enable internode encryption. If you want, you can skip the internode part, however you will need the [`ca-cert`](http://thelastpickle.com/blog/2015/09/30/hardening-cassandra-step-by-step-part-1-server-to-server.html#byo-certificate-authority) file and provide a keystore file for you node as specified.
+1. Follow the cited blog post to enable internode encryption. If you want, you can skip the internode part, however you will need the [`ca-cert`](http://thelastpickle.com/blog/2015/09/30/hardening-cassandra-step-by-step-part-1-server-to-server.html#byo-certificate-authority) file and provide a keyStore file for you node as specified.
 2. Generate a trustStore named `client-truststore.jks` including the CA root certificate running
    ```bash
    keytool -keystore client-truststore.jks \
