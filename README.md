@@ -9,7 +9,16 @@ In particular I will use the [Cassandra Cluster Manager (CCM)](https://github.co
 ## To make it work:
 
 1. Follow the cited blog post to enable internode encryption. If you want, you can skip the internode part, however you will need the [`ca-cert`](http://thelastpickle.com/blog/2015/09/30/hardening-cassandra-step-by-step-part-1-server-to-server.html#byo-certificate-authority) file and provide a keystore file for you node as specified.
-2. Generate a trust store named `client-truststore.jks` including the CA root certificate running `keytool -keystore client-truststore.jks -alias CARoot -importcert -file ca-cert -keypass mypass -storepass truststorepass -noprompt`
+2. Generate a trustStore named `client-truststore.jks` including the CA root certificate running
+   ```bash
+   keytool -keystore client-truststore.jks \
+           -alias CARoot \
+           -importcert -file ca-cert \
+           -keypass mypass \
+           -storepass truststorepass \
+           -noprompt`
+   ```
+
 3. Put `client-truststore.jks` under `resources` folder of this project.
    This way client is shares your Certification Authority with any node in the cluster. This will allow encrypted communication after the handshake.
 4. Change the [client_encryption_options](https://github.com/apache/cassandra/blob/trunk/conf/cassandra.yaml#L897-L911) section of `cassandra-yaml` for every node of the cluster as follows to enable client encryption (but not authentication):
@@ -26,7 +35,7 @@ In particular I will use the [Cassandra Cluster Manager (CCM)](https://github.co
 
 ## Code details
 
-Inside `main` method, trust store file and password are set programmatically, using `getCluster(String trustStoreLocation, String trustStorePassword, String host)` method
+Inside `main` method, trustStore file and password are set programmatically, using `getCluster(String trustStoreLocation, String trustStorePassword, String host)` method
 
 ```java
     cluster = getCluster("/client-truststore.jks", "truststorepass", host);
@@ -79,8 +88,14 @@ where the method is defined as follows:
   }
 ```
 
-However you can simplify code if you pass trustStore and related password through command line using `-Djavax.net.ssl.trustStore=/Users/Giampaolo/dev/cassandra-ssl-client-to-node-example/target/classes/client-truststore.jks -Djavax.net.ssl.trustStorePassword=truststorepass`
-In this case, you neee to build the cluster only with the SSL option enabled:
+However you can simplify code if you pass trustStore and related password through command line using
+
+```bash
+-Djavax.net.ssl.trustStore=/Users/Giampaolo/dev/cassandra-ssl-client-to-node-example/target/classes/client-truststore.jks
+-Djavax.net.ssl.trustStorePassword=truststorepass
+```
+
+In this case, you neeed to build the cluster only with the SSL option enabled:
 ```java
  Cluster cluster = Cluster.builder()
       .addContactPoint(host)
