@@ -101,7 +101,7 @@ In this case, you neeed to build the cluster only with the SSL option enabled:
       .addContactPoint(host)
       .withSSL()
       .build();
-``
+```
 
 
 ### To invoke from command line type
@@ -135,7 +135,7 @@ If you allow client encryption, `cqlsh` won't work anymore as is. You need to fo
 2. Convert the `PKCS#12` to the [PEM](https://en.wikipedia.org/wiki/Privacy-enhanced_Electronic_Mail) format with this command `openssl pkcs12 -in node1.p12 -out node1.pem -nodes`. The option `-nodes` is not the word "nodes" so it's unrelated to Cassandra nodes, but rather is "no DES" which means that OpenSSL will not encrypt the private key in a `PKCS#12` file.
 3. Move the file `node1.pem` to the folder `~/.cassandra`. This folder holds the command history for `cqlsh`, `cli` and `nodetool` session. It contains also the `.cqlshrs` file that specifies different settings for the cqlsh sessions.
    The `.cassandra` directory holds command history for your `cqlsh`, `cli`, and `nodetool` sessions. It is also the default location for the `.cqlshrc` file, which allows you to persist various [settings](http://docs.datastax.com/en/cql/3.1/cql/cql_reference/cqlshrc.html) for your `cqlsh` sessions.
-4  Edit or create the `~/.cassandra/cqlshrc` file adding the following sections if not present:
+4. Edit or create the `~/.cassandra/cqlshrc` file adding the following sections if not present:
 
    ```bash
    [authentication]
@@ -152,7 +152,7 @@ If you allow client encryption, `cqlsh` won't work anymore as is. You need to fo
    validate = true ## Optional, true by default.
    ```
 
-5. connect with `ccm node1 cqlsh --ssl`. `cqlsh` allows you to pass the file path also as the `SSL_CERTFILE` variable or modifying the `cqlshrc` file like this
+5. Connect with `ccm node1 cqlsh --ssl`. `cqlsh` allows you to pass the file path also as the `SSL_CERTFILE` variable or modifying the `cqlshrc` file like this
 
 In alternative, you can specify certificate for every node in the `[certfiles]` section of
 
@@ -176,11 +176,12 @@ In alternative, you can specify certificate for every node in the `[certfiles]` 
    ```
 
 
-
-
 ## References
-[What is a Pem file and how does it differ from other OpenSSL Generated Key File Formats](http://serverfault.com/a/9717/329639)
-[Creating and using the cqlshrc file](http://docs.datastax.com/en/cql/3.1/cql/cql_reference/cqlshrc.html)
-[Using cqlsh with SSL encryption](http://docs.datastax.com/en/cassandra/2.1/cassandra/security/secureCqlshSSL_t.html)
-[“~/.cassandra” folder - what is it used for?](http://stackoverflow.com/q/30869921/1360888)
+* [What is a Pem file and how does it differ from other OpenSSL Generated Key File Formats](http://serverfault.com/a/9717/329639)
+
+* [Creating and using the cqlshrc file](http://docs.datastax.com/en/cql/3.1/cql/cql_reference/cqlshrc.html)
+
+* [Using cqlsh with SSL encryption](http://docs.datastax.com/en/cassandra/2.1/cassandra/security/secureCqlshSSL_t.html)
+
+* [“~/.cassandra” folder - what is it used for?](http://stackoverflow.com/q/30869921/1360888)
 
